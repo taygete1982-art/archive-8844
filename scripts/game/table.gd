@@ -258,4 +258,29 @@ func tick(delta):
 		H.refresh(hud, score, balls, sym_lit)
 		if balls <= 0:
 			over = true
-			hud.overlay.text = "ТЬ
+			hud.overlay.text = "ТЬМА ЗАБРАЛА МЯЧИ\n\nтапни — новый круг"
+			hud.overlay.visible = true
+		respawn()
+
+func reset():
+	score = 0
+	balls = 3
+	over = false
+	gate_open = false
+	gate_shape.disabled = false
+	gate_vis.visible = true
+	gate_seam.visible = true
+	bump_lit = [false, false, false]
+	for i in range(3):
+		bumpers[i].get_child(2).color = Color(0.35, 0.28, 0.12)
+	lover_hit = [false, false]
+	sym_lit = [false, false, false]
+	for i in range(3):
+		symbols[i].get_child(1).color = Color(0.8, 0.62, 0.25)
+	thread.default_color = Color(1, 0.75, 0.35, 0.4)
+	hud.overlay.visible = false
+	hot = false
+	hot_t = 0.0
+	A.reset_fx(fx)
+	respawn()
+	H.refresh(hud, score, balls, sym_lit)
