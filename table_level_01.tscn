@@ -1,0 +1,331 @@
+[gd_scene format=3 uid="uid://c8yvxg3ulq3a"]
+
+[ext_resource type="Script" uid="uid://drq0nmsp5hcr7" path="res://scripts/flipper.gd" id="1_flipper"]
+[ext_resource type="Script" uid="uid://bsqyibx2l1bnh" path="res://scripts/dead_zone.gd" id="2_deadzone"]
+[ext_resource type="Script" uid="uid://cbt4pnyvfcxcu" path="res://scripts/ball.gd" id="3_ball"]
+[ext_resource type="Script" uid="uid://wjd5rsenjsjf" path="res://scripts/camera.gd" id="4_camera"]
+[ext_resource type="Texture2D" uid="uid://jqvf3wohesbn" path="res://assets/textures/00011-3068444501.png" id="5_bg"]
+[ext_resource type="Texture2D" uid="uid://dc6cf0sd2b4ho" path="res://assets/textures/00014-3068444504.png" id="6_floor"]
+
+[sub_resource type="Gradient" id="Gradient_sun"]
+colors = PackedColorArray(1, 0.9, 0.7, 1, 1, 0.9, 0.7, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture_sun"]
+gradient = SubResource("Gradient_sun")
+width = 1024
+height = 1024
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dust"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(500, 900, 1)
+gravity = Vector3(0, 98, 0)
+scale_max = 3.0
+color = Color(0.8, 0.7, 0.6, 0.15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wleft"]
+size = Vector2(40, 1920)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wright"]
+size = Vector2(40, 1920)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wtop"]
+size = Vector2(1080, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wbottom"]
+size = Vector2(1080, 40)
+
+[sub_resource type="OccluderPolygon2D" id="Occluder_left"]
+polygon = PackedVector2Array(0, 0, 60, 0, 60, 1920, 0, 1920)
+
+[sub_resource type="OccluderPolygon2D" id="Occluder_right"]
+polygon = PackedVector2Array(1020, 0, 1080, 0, 1080, 1920, 1020, 1920)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ball"]
+friction = 0.1
+bounce = 0.4
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ball"]
+radius = 15.0
+
+[sub_resource type="Gradient" id="Gradient_ball"]
+colors = PackedColorArray(1, 0.85, 0.2, 0.4, 1, 0.85, 0.2, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture_ball"]
+gradient = SubResource("Gradient_ball")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_flipper"]
+size = Vector2(180, 25)
+
+[sub_resource type="OccluderPolygon2D" id="Occluder_flipper"]
+polygon = PackedVector2Array(0, -12.5, 180, -12.5, 180, 12.5, 0, 12.5)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_bumper"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bumper"]
+radius = 40.0
+
+[sub_resource type="Gradient" id="Gradient_bumper"]
+colors = PackedColorArray(1, 0.2, 0.1, 0.5, 1, 0.2, 0.1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture_bumper"]
+gradient = SubResource("Gradient_bumper")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dead"]
+size = Vector2(1080, 100)
+
+[node name="TableLevel01" type="Node2D" unique_id=1112830133]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=105504341]
+color = Color(0.3, 0.25, 0.2, 1)
+
+[node name="Background" type="TextureRect" parent="." unique_id=824161750]
+modulate = Color(0.5, 0.5, 0.55, 1)
+offset_right = 1080.0
+offset_bottom = 1920.0
+texture = ExtResource("5_bg")
+expand_mode = 1
+
+[node name="Floor" type="TextureRect" parent="." unique_id=98336859]
+modulate = Color(0.9, 0.85, 0.75, 1)
+offset_left = 60.0
+offset_top = 60.0
+offset_right = 1020.0
+offset_bottom = 1860.0
+texture = ExtResource("6_floor")
+expand_mode = 1
+
+[node name="WallLeft" type="Polygon2D" parent="." unique_id=171229177]
+color = Color(0.1, 0.08, 0.06, 1)
+polygon = PackedVector2Array(0, 0, 60, 0, 60, 1920, 0, 1920)
+
+[node name="WallRight" type="Polygon2D" parent="." unique_id=1646649179]
+color = Color(0.09, 0.07, 0.05, 1)
+polygon = PackedVector2Array(1020, 0, 1080, 0, 1080, 1920, 1020, 1920)
+
+[node name="WallTop" type="Polygon2D" parent="." unique_id=1330576765]
+color = Color(0.12, 0.09, 0.07, 1)
+polygon = PackedVector2Array(0, 0, 1080, 0, 1080, 60, 0, 60)
+
+[node name="WallBottom" type="Polygon2D" parent="." unique_id=823537794]
+color = Color(0.14, 0.11, 0.08, 1)
+polygon = PackedVector2Array(0, 1860, 1080, 1860, 1080, 1920, 0, 1920)
+
+[node name="PillarLeft" type="Polygon2D" parent="." unique_id=1477791909]
+color = Color(0.16, 0.12, 0.09, 1)
+polygon = PackedVector2Array(180, 150, 240, 150, 240, 550, 180, 550)
+
+[node name="PillarRight" type="Polygon2D" parent="." unique_id=598423502]
+color = Color(0.15, 0.11, 0.08, 1)
+polygon = PackedVector2Array(840, 150, 900, 150, 900, 550, 840, 550)
+
+[node name="Arch" type="Polygon2D" parent="." unique_id=1774596139]
+color = Color(0.08, 0.06, 0.05, 1)
+polygon = PackedVector2Array(300, 60, 780, 60, 780, 120, 720, 120, 720, 200, 660, 200, 660, 120, 420, 120, 420, 200, 360, 200, 360, 120, 300, 120)
+
+[node name="Sun" type="PointLight2D" parent="." unique_id=712118461]
+position = Vector2(540, 100)
+color = Color(1, 0.9, 0.7, 1)
+energy = 0.8
+shadow_enabled = true
+texture = SubResource("GradientTexture_sun")
+texture_scale = 6.0
+
+[node name="Ambient" type="PointLight2D" parent="." unique_id=2143587829]
+position = Vector2(540, 960)
+color = Color(0.7, 0.6, 0.5, 1)
+energy = 0.3
+texture = SubResource("GradientTexture_sun")
+texture_scale = 10.0
+
+[node name="Dust" type="GPUParticles2D" parent="." unique_id=1066409096]
+position = Vector2(540, 960)
+amount = 60
+lifetime = 10.0
+process_material = SubResource("ParticleProcessMaterial_dust")
+
+[node name="MainCamera" type="Camera2D" parent="." unique_id=293266828]
+script = ExtResource("4_camera")
+
+[node name="Walls" type="StaticBody2D" parent="." unique_id=2130979085]
+
+[node name="WallLeft" type="CollisionShape2D" parent="Walls" unique_id=1128008747]
+position = Vector2(-20, 960)
+shape = SubResource("RectangleShape2D_wleft")
+
+[node name="WallRight" type="CollisionShape2D" parent="Walls" unique_id=629565691]
+position = Vector2(1100, 960)
+shape = SubResource("RectangleShape2D_wright")
+
+[node name="WallTop" type="CollisionShape2D" parent="Walls" unique_id=1882912254]
+position = Vector2(540, -20)
+shape = SubResource("RectangleShape2D_wtop")
+
+[node name="WallBottom" type="CollisionShape2D" parent="Walls" unique_id=419273017]
+position = Vector2(540, 1940)
+shape = SubResource("RectangleShape2D_wbottom")
+
+[node name="OccluderLeft" type="LightOccluder2D" parent="Walls" unique_id=1634804081]
+occluder = SubResource("Occluder_left")
+
+[node name="OccluderRight" type="LightOccluder2D" parent="Walls" unique_id=310085870]
+occluder = SubResource("Occluder_right")
+
+[node name="Ball" type="RigidBody2D" parent="." unique_id=1321658565]
+position = Vector2(300, 200)
+physics_material_override = SubResource("PhysicsMaterial_ball")
+can_sleep = false
+continuous_cd = 1
+script = ExtResource("3_ball")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball" unique_id=885099069]
+shape = SubResource("CircleShape2D_ball")
+
+[node name="BallGlow" type="Sprite2D" parent="Ball" unique_id=1396280709]
+scale = Vector2(0.8, 0.8)
+texture = SubResource("GradientTexture_ball")
+
+[node name="BallVisual" type="ColorRect" parent="Ball" unique_id=903214694]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+color = Color(1, 0.9, 0.2, 1)
+
+[node name="BallLight" type="PointLight2D" parent="Ball" unique_id=1227364845]
+color = Color(1, 0.85, 0.2, 1)
+energy = 0.6
+texture = SubResource("GradientTexture_ball")
+texture_scale = 2.0
+
+[node name="LeftFlipper" type="AnimatableBody2D" parent="." unique_id=1645331257]
+position = Vector2(200, 1600)
+rotation = 0.523599
+script = ExtResource("1_flipper")
+
+[node name="FlipperShape" type="CollisionShape2D" parent="LeftFlipper" unique_id=207916460]
+position = Vector2(90, 0)
+shape = SubResource("RectangleShape2D_flipper")
+
+[node name="FlipperVisual" type="ColorRect" parent="LeftFlipper" unique_id=145948864]
+offset_top = -12.5
+offset_right = 180.0
+offset_bottom = 12.5
+color = Color(0.85, 0.75, 0.6, 1)
+
+[node name="FlipperOccluder" type="LightOccluder2D" parent="LeftFlipper" unique_id=1637792444]
+position = Vector2(90, 0)
+occluder = SubResource("Occluder_flipper")
+
+[node name="LeftPivot" type="ColorRect" parent="LeftFlipper" unique_id=1619052517]
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="RightFlipper" type="AnimatableBody2D" parent="." unique_id=1217431988]
+position = Vector2(880, 1600)
+rotation = -0.523599
+script = ExtResource("1_flipper")
+rest_angle = -30.0
+active_angle = 30.0
+
+[node name="FlipperShape" type="CollisionShape2D" parent="RightFlipper" unique_id=1660273249]
+position = Vector2(-90, 0)
+shape = SubResource("RectangleShape2D_flipper")
+
+[node name="FlipperVisual" type="ColorRect" parent="RightFlipper" unique_id=1670068507]
+offset_left = -180.0
+offset_top = -12.5
+offset_bottom = 12.5
+color = Color(0.85, 0.75, 0.6, 1)
+
+[node name="FlipperOccluder" type="LightOccluder2D" parent="RightFlipper" unique_id=749025753]
+position = Vector2(-90, 0)
+occluder = SubResource("Occluder_flipper")
+
+[node name="RightPivot" type="ColorRect" parent="RightFlipper" unique_id=1718535678]
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="Bumpers" type="Node2D" parent="." unique_id=1018195515]
+
+[node name="Bumper1" type="StaticBody2D" parent="Bumpers" unique_id=1554105535]
+position = Vector2(540, 800)
+physics_material_override = SubResource("PhysicsMaterial_bumper")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bumpers/Bumper1" unique_id=945557070]
+shape = SubResource("CircleShape2D_bumper")
+
+[node name="Visual" type="ColorRect" parent="Bumpers/Bumper1" unique_id=390938777]
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.95, 0.25, 0.15, 1)
+
+[node name="BumperGlow" type="Sprite2D" parent="Bumpers/Bumper1" unique_id=2056100642]
+texture = SubResource("GradientTexture_bumper")
+
+[node name="Bumper2" type="StaticBody2D" parent="Bumpers" unique_id=1125182193]
+position = Vector2(400, 1000)
+physics_material_override = SubResource("PhysicsMaterial_bumper")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bumpers/Bumper2" unique_id=1792601597]
+shape = SubResource("CircleShape2D_bumper")
+
+[node name="Visual" type="ColorRect" parent="Bumpers/Bumper2" unique_id=232837684]
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.95, 0.25, 0.15, 1)
+
+[node name="BumperGlow" type="Sprite2D" parent="Bumpers/Bumper2" unique_id=1788087636]
+texture = SubResource("GradientTexture_bumper")
+
+[node name="Bumper3" type="StaticBody2D" parent="Bumpers" unique_id=1815285427]
+position = Vector2(680, 1000)
+physics_material_override = SubResource("PhysicsMaterial_bumper")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bumpers/Bumper3" unique_id=902506359]
+shape = SubResource("CircleShape2D_bumper")
+
+[node name="Visual" type="ColorRect" parent="Bumpers/Bumper3" unique_id=416740213]
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.95, 0.25, 0.15, 1)
+
+[node name="BumperGlow" type="Sprite2D" parent="Bumpers/Bumper3" unique_id=1855298347]
+texture = SubResource("GradientTexture_bumper")
+
+[node name="DeadZone" type="Area2D" parent="." unique_id=944853655]
+position = Vector2(540, 1850)
+script = ExtResource("2_deadzone")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeadZone" unique_id=1629837689]
+shape = SubResource("RectangleShape2D_dead")
+
+[node name="BallSpawn" type="Marker2D" parent="." unique_id=1383541638]
+position = Vector2(300, 200)

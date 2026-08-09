@@ -1,0 +1,69 @@
+[gd_scene load_steps=6 format=3 uid="uid://backdrop"]
+
+[ext_resource type="Texture2D" path="res://assets/textures/00011-3068444501.png" id="1_bg"]
+[ext_resource type="Texture2D" path="res://assets/textures/floor_desert_01.png" id="2_floor"]
+[ext_resource type="Shader" path="res://assets/shaders/sun_relief.gdshader" id="3_sun"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sun"]
+shader = ExtResource("3_sun")
+shader_parameter/floor_tex = ExtResource("2_floor")
+
+[sub_resource type="Gradient" id="Gradient_warm"]
+colors = PackedColorArray(1, 0.78, 0.45, 0.22, 1, 0.78, 0.45, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture_warm"]
+gradient = SubResource("Gradient_warm")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
+blend_mode = 1
+
+[sub_resource type="Environment" id="Environment_env"]
+glow_enabled = true
+glow_intensity = 0.7
+glow_bloom = 0.1
+
+[node name="Backdrop" type="Node2D"]
+
+[node name="WorldEnv" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_env")
+
+[node name="Background" type="TextureRect" parent="."]
+offset_right = 1080.0
+offset_bottom = 1920.0
+texture = ExtResource("1_bg")
+expand_mode = 1
+stretch_mode = 0
+modulate = Color(0.25, 0.25, 0.3, 1)
+
+[node name="Floor" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_sun")
+offset_left = 60.0
+offset_top = 60.0
+offset_right = 1020.0
+offset_bottom = 1860.0
+texture = ExtResource("2_floor")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="LightSpot1" type="Sprite2D" parent="."]
+position = Vector2(250, 350)
+scale = Vector2(2.5, 2.5)
+texture = SubResource("GradientTexture_warm")
+material = SubResource("CanvasItemMaterial_add")
+
+[node name="LightSpot2" type="Sprite2D" parent="."]
+position = Vector2(850, 700)
+scale = Vector2(3, 3)
+texture = SubResource("GradientTexture_warm")
+material = SubResource("CanvasItemMaterial_add")
+
+[node name="LightSpot3" type="Sprite2D" parent="."]
+position = Vector2(540, 150)
+scale = Vector2(4, 2)
+texture = SubResource("GradientTexture_warm")
+material = SubResource("CanvasItemMaterial_add")

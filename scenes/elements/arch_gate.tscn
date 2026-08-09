@@ -1,0 +1,78 @@
+[gd_scene load_steps=8 format=3 uid="uid://arch_gate"]
+
+[ext_resource type="Script" path="res://scripts/arch_gate.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trigger"]
+size = Vector2(160, 40)
+
+[sub_resource type="Gradient" id="Gradient_veil"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.95, 0.8, 0.45, 0, 1, 0.9, 0.55, 0.75, 0.95, 0.8, 0.45, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture_veil"]
+gradient = SubResource("Gradient_veil")
+width = 256
+height = 128
+fill = 0
+fill_from = Vector2(0, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_warm"]
+colors = PackedColorArray(1, 0.85, 0.6, 0.18, 1, 0.85, 0.6, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture_warm"]
+gradient = SubResource("Gradient_warm")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
+blend_mode = 1
+
+[node name="ArchGate" type="Node2D" script=ExtResource("1_script")]
+bonus_points = 200
+
+[node name="Rays" type="Sprite2D" parent="."]
+position = Vector2(0, -20)
+scale = Vector2(1.6, 1.2)
+texture = SubResource("GradientTexture_warm")
+material = SubResource("CanvasItemMaterial_add")
+modulate = Color(1, 0.9, 0.6, 0.6)
+
+[node name="ColumnLeft" type="Polygon2D" parent="."]
+color = Color(0.28, 0.22, 0.16, 1)
+polygon = PackedVector2Array(-90, -30, -70, -30, -70, 50, -90, 50)
+
+[node name="ColumnLeftEdge" type="Polygon2D" parent="."]
+color = Color(0.5, 0.4, 0.28, 1)
+polygon = PackedVector2Array(-73, -30, -70, -30, -70, 50, -73, 50)
+
+[node name="ColumnRight" type="Polygon2D" parent="."]
+color = Color(0.28, 0.22, 0.16, 1)
+polygon = PackedVector2Array(70, -30, 90, -30, 90, 50, 70, 50)
+
+[node name="ColumnRightEdge" type="Polygon2D" parent="."]
+color = Color(0.5, 0.4, 0.28, 1)
+polygon = PackedVector2Array(70, -30, 73, -30, 73, 50, 70, 50)
+
+[node name="ArchTop" type="Polygon2D" parent="."]
+color = Color(0.3, 0.24, 0.18, 1)
+polygon = PackedVector2Array(-90, -40, 90, -40, 90, -25, -90, -25)
+
+[node name="ArchInner" type="Polygon2D" parent="."]
+color = Color(0.06, 0.045, 0.035, 1)
+polygon = PackedVector2Array(-70, -25, 70, -25, 70, 50, -70, 50)
+
+[node name="Veil" type="Sprite2D" parent="."]
+position = Vector2(0, 12)
+scale = Vector2(0.6, 0.5)
+texture = SubResource("GradientTexture_veil")
+material = SubResource("CanvasItemMaterial_add")
+
+[node name="Trigger" type="Area2D" parent="."]
+position = Vector2(0, 12)
+
+[node name="TriggerShape" type="CollisionShape2D" parent="Trigger"]
+shape = SubResource("RectangleShape2D_trigger")

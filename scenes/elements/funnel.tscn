@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://funnel"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_funnel"]
+size = Vector2(470, 60)
+
+[node name="Funnel" type="StaticBody2D"]
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_funnel")
+
+[node name="Visual" type="ColorRect" parent="."]
+offset_left = -235.0
+offset_top = -30.0
+offset_right = 235.0
+offset_bottom = 30.0
+color = Color(0.18, 0.14, 0.11, 1)

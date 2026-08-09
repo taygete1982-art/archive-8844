@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://flipper_right"]
+
+[ext_resource type="Script" path="res://scripts/flipper.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_shape"]
+size = Vector2(250, 40)
+
+[node name="RightFlipper" type="AnimatableBody2D" script=ExtResource("1_script")]
+
+[node name="FlipperShape" type="CollisionShape2D" parent="."]
+position = Vector2(-125, 0)
+shape = SubResource("RectangleShape2D_shape")
+
+[node name="FlipperShadow" type="Polygon2D" parent="."]
+color = Color(0, 0, 0, 0.35)
+polygon = PackedVector2Array(-4, -11, -254, -4, -254, 16, -4, 23)
+
+[node name="FlipperBase" type="Polygon2D" parent="."]
+color = Color(0.12, 0.09, 0.06, 1)
+polygon = PackedVector2Array(0, -17, -250, -10, -250, 10, 0, 17)
+
+[node name="FlipperVisual" type="Polygon2D" parent="."]
+color = Color(0.48, 0.38, 0.27, 1)
+polygon = PackedVector2Array(-2, -14, -248, -8, -248, 8, -2, 14)
+
+[node name="FlipperEdge" type="Polygon2D" parent="."]
+color = Color(0.78, 0.65, 0.47, 1)
+polygon = PackedVector2Array(-2, -14, -248, -8, -248, -5, -2, -10)

@@ -1,0 +1,39 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="PinballOdyssey"
+run/main_scene="uid://dn2nfv6uaenab"
+config/features=PackedStringArray("4.7", "Mobile")
+run/flush_stdout_on_print=true
+config/icon="res://icon.svg"
+
+[autoload]
+
+ScoreManager="*res://scripts/score_manager.gd"
+FX="*uid://c8af03dtr6nxw"
+
+[display]
+
+window/size/viewport_width=1080
+window/size/viewport_height=1920
+window/stretch/mode="canvas_items"
+
+[physics]
+
+common/physics_ticks_per_second=120
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+rendering_device/driver.windows="d3d12"
+renderer/rendering_method="mobile"
+2d/shadows/enabled=true

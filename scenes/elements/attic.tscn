@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://ttic"]
+
+[ext_resource type="Script" path="res://scripts/gate.gd" id="1_gate"]
+[ext_resource type="Script" path="res://scripts/attic.gd" id="2_attic"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gate"]
+size = Vector2(160, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_attic"]
+size = Vector2(150, 60)
+
+[sub_resource type="Gradient" id="Gradient_warm"]
+colors = PackedColorArray(1, 0.78, 0.45, 0.22, 1, 0.78, 0.45, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture_warm"]
+gradient = SubResource("Gradient_warm")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
+blend_mode = 1
+
+[node name="Attic" type="Node2D"]
+
+[node name="AtticGate" type="StaticBody2D" parent="." script=ExtResource("1_gate")]
+position = Vector2(540, 30)
+
+[node name="GateCollision" type="CollisionShape2D" parent="AtticGate"]
+shape = SubResource("RectangleShape2D_gate")
+
+[node name="GateVisual" type="ColorRect" parent="AtticGate"]
+offset_left = -80.0
+offset_top = -20.0
+offset_right = 80.0
+offset_bottom = 20.0
+color = Color(0.14, 0.11, 0.08, 1)
+
+[node name="GateSeam" type="ColorRect" parent="AtticGate"]
+offset_left = -80.0
+offset_top = 14.0
+offset_right = 80.0
+offset_bottom = 20.0
+color = Color(0.9, 0.7, 0.3, 0.8)
+
+[node name="AtticRays" type="Sprite2D" parent="."]
+position = Vector2(540, 40)
+scale = Vector2(1.4, 2.4)
+texture = SubResource("GradientTexture_warm")
+material = SubResource("CanvasItemMaterial_add")
+modulate = Color(1, 0.9, 0.6, 0)
+visible = false
+
+[node name="AtticZone" type="Area2D" parent="." script=ExtResource("2_attic")]
+position = Vector2(540, 0)
+
+[node name="AtticShape" type="CollisionShape2D" parent="AtticZone"]
+shape = SubResource("RectangleShape2D_attic")

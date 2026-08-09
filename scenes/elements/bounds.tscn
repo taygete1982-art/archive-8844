@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://bounds"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wleft"]
+size = Vector2(40, 1920)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wright"]
+size = Vector2(40, 1920)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wtop_left"]
+size = Vector2(460, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wtop_right"]
+size = Vector2(460, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wbottom"]
+size = Vector2(1080, 40)
+
+[node name="Bounds" type="Node2D"]
+
+[node name="VisWallTopLeft" type="Polygon2D" parent="."]
+color = Color(0.16, 0.13, 0.1, 1)
+polygon = PackedVector2Array(0, 0, 460, 0, 460, 60, 0, 60)
+
+[node name="VisWallTopRight" type="Polygon2D" parent="."]
+color = Color(0.16, 0.13, 0.1, 1)
+polygon = PackedVector2Array(620, 0, 1080, 0, 1080, 60, 620, 60)
+
+[node name="Passage" type="ColorRect" parent="."]
+offset_left = 460.0
+offset_top = 0.0
+offset_right = 620.0
+offset_bottom = 60.0
+color = Color(0.04, 0.03, 0.02, 1)
+
+[node name="TopEdge" type="Polygon2D" parent="."]
+color = Color(0.45, 0.34, 0.2, 1)
+polygon = PackedVector2Array(0, 56, 460, 56, 460, 60, 0, 60)
+
+[node name="TopEdgeRight" type="Polygon2D" parent="."]
+color = Color(0.45, 0.34, 0.2, 1)
+polygon = PackedVector2Array(620, 56, 1080, 56, 1080, 60, 620, 60)
+
+[node name="TopFloorShadow" type="Polygon2D" parent="."]
+color = Color(0, 0, 0, 0.2)
+polygon = PackedVector2Array(60, 60, 1020, 60, 1020, 88, 60, 88)
+
+[node name="VisWallBottom" type="Polygon2D" parent="."]
+color = Color(0.18, 0.14, 0.11, 1)
+polygon = PackedVector2Array(0, 1860, 1080, 1860, 1080, 1920, 0, 1920)
+
+[node name="BottomEdge" type="Polygon2D" parent="."]
+color = Color(0.45, 0.34, 0.2, 1)
+polygon = PackedVector2Array(0, 1860, 1080, 1860, 1080, 1864, 0, 1864)
+
+[node name="BottomFloorShadow" type="Polygon2D" parent="."]
+color = Color(0, 0, 0, 0.2)
+polygon = PackedVector2Array(60, 1832, 1020, 1832, 1020, 1860, 60, 1860)
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="WallLeft" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-20, 960)
+shape = SubResource("RectangleShape2D_wleft")
+
+[node name="WallRight" type="CollisionShape2D" parent="Walls"]
+position = Vector2(1100, 960)
+shape = SubResource("RectangleShape2D_wright")
+
+[node name="WallTopLeft" type="CollisionShape2D" parent="Walls"]
+position = Vector2(230, -20)
+shape = SubResource("RectangleShape2D_wtop_left")
+
+[node name="WallTopRight" type="CollisionShape2D" parent="Walls"]
+position = Vector2(850, -20)
+shape = SubResource("RectangleShape2D_wtop_right")
+
+[node name="WallBottom" type="CollisionShape2D" parent="Walls"]
+position = Vector2(540, 1940)
+shape = SubResource("RectangleShape2D_wbottom")
