@@ -1,4 +1,4 @@
-extends RefCounted
+﻿extends RefCounted
 
 var W = preload("res://scripts/game/world.gd")
 var H = preload("res://scripts/game/hud.gd")
@@ -32,7 +32,6 @@ var sym_lit := [false, false, false]
 var score := 0
 var balls := 3
 var gate_open := false
-var stuck_t := 0.0
 var over := false
 var flip_l_on := false
 var flip_r_on := false
@@ -41,8 +40,8 @@ var flip_r_a := -30.0
 var hot := false
 var hot_t := 0.0
 
-const MAX_SPEED := 1600.0
-const FLIP_SPEED := 1600.0
+const MAX_SPEED := 1300.0
+const FLIP_SPEED := 1400.0
 
 func build(r: Node2D):
 	root = r
@@ -69,7 +68,7 @@ func build(r: Node2D):
 	plunger.setup(ball, refs.lane.plunger_vis)
 	respawn()
 	H.refresh(hud, score, balls, sym_lit)
-	hud.overlay.text = "Зажги три печати —\nЧердак откроется"
+	hud.overlay.text = "Р—Р°Р¶РіРё С‚СЂРё РїРµС‡Р°С‚Рё вЂ”\nР§РµСЂРґР°Рє РѕС‚РєСЂРѕРµС‚СЃСЏ"
 	hud.overlay.visible = true
 	var tw = root.create_tween()
 	tw.tween_interval(5.0)
@@ -80,7 +79,6 @@ func respawn():
 	ball.linear_velocity = Vector2.ZERO
 	hot = false
 	hot_t = 0.0
-	stuck_t = 0.0
 	if biome:
 		biome.clear()
 
@@ -170,7 +168,7 @@ func tick(delta):
 		s.cd -= delta
 		if s.cd <= 0 and s.area.get_overlapping_bodies().has(ball):
 			s.cd = 0.25
-			ball.apply_central_impulse(s.normal * 900)
+			ball.apply_central_impulse(s.normal * 750)
 			score += 10
 			H.refresh(hud, score, balls, sym_lit)
 			s.edge.modulate = Color(4, 4, 4, 1)
@@ -179,13 +177,6 @@ func tick(delta):
 
 	var in_lane = plunger and plunger.ball_in_lane()
 
-	if not in_lane and ball.linear_velocity.length() < 20:
-		stuck_t += delta
-		if stuck_t > 6.0:
-			respawn()
-	else:
-		stuck_t = 0.0
-
 	for i in range(3):
 		bump_cd[i] -= delta
 		if bumpers[i].global_position.distance_to(ball.global_position) < 45 and bump_cd[i] <= 0:
@@ -193,8 +184,8 @@ func tick(delta):
 			var dir = (ball.global_position - bumpers[i].global_position).normalized()
 			if dir.length() < 0.1:
 				dir = Vector2(0, -1)
-			dir = dir.rotated(randf_range(-0.4, 0.4))
-			ball.apply_central_impulse(dir * 700)
+			dir = dir.rotated(randf_range(-0.25, 0.25))
+			ball.apply_central_impulse(dir * 600)
 			bumpers[i].get_child(1).modulate = Color(4, 4, 4, 1)
 			var twb = root.create_tween()
 			twb.tween_property(bumpers[i].get_child(1), "modulate", Color(1, 1, 1, 1), 0.2)
@@ -206,14 +197,14 @@ func tick(delta):
 				if bump_lit[0] and bump_lit[1] and bump_lit[2]:
 					score += 1000
 					over = true
-					hud.overlay.text = "УРОВЕНЬ ПРОЙДЕН\n\nтапни — новый круг"
+					hud.overlay.text = "РЈР РћР’Р•РќР¬ РџР РћР™Р”Р•Рќ\n\nС‚Р°РїРЅРё вЂ” РЅРѕРІС‹Р№ РєСЂСѓРі"
 					hud.overlay.visible = true
 
 	for i in range(2):
 		if hot and not lover_hit[i] and lovers[i].global_position.distance_to(ball.global_position) < 55:
 			lover_hit[i] = true
 			var dir = (ball.global_position - lovers[i].global_position).normalized()
-			dir = dir.rotated(randf_range(-0.4, 0.4))
+			dir = dir.rotated(randf_range(-0.25, 0.25))
 			ball.apply_central_impulse(dir * 550)
 			lovers[i].get_child(2).color = Color(1, 0.85, 0.4)
 			thread.default_color = Color(1, 0.8, 0.4, 0.9)
@@ -258,7 +249,7 @@ func tick(delta):
 		H.refresh(hud, score, balls, sym_lit)
 		if balls <= 0:
 			over = true
-			hud.overlay.text = "ТЬМА ЗАБРАЛА МЯЧИ\n\nтапни — новый круг"
+			hud.overlay.text = "РўР¬РњРђ Р—РђР‘Р РђР›Рђ РњРЇР§Р\n\nС‚Р°РїРЅРё вЂ” РЅРѕРІС‹Р№ РєСЂСѓРі"
 			hud.overlay.visible = true
 		respawn()
 
