@@ -72,22 +72,22 @@ static func slingshot(root, pos, rot) -> Dictionary:
 	root.add_child(f)
 	var c = CollisionShape2D.new()
 	var s = RectangleShape2D.new()
-	s.size = Vector2(470, 60)
+	s.size = Vector2(260, 50)
 	c.shape = s
 	f.add_child(c)
 	var v = ColorRect.new()
-	v.size = Vector2(470, 60)
-	v.position = Vector2(-235, -30)
+	v.size = Vector2(260, 50)
+	v.position = Vector2(-130, -25)
 	v.color = Color(0.12, 0.1, 0.07, 1)
 	f.add_child(v)
-	var edge = poly(Color(0.85, 0.65, 0.25, 1), [Vector2(-235, -30), Vector2(235, -30), Vector2(235, -22), Vector2(-235, -22)])
+	var edge = poly(Color(0.85, 0.65, 0.25, 1), [Vector2(-130, -25), Vector2(130, -25), Vector2(130, -17), Vector2(-130, -17)])
 	f.add_child(edge)
 	var area = Area2D.new()
-	area.position = Vector2(0, -42)
+	area.position = Vector2(0, -36)
 	f.add_child(area)
 	var ac = CollisionShape2D.new()
 	var ashape = RectangleShape2D.new()
-	ashape.size = Vector2(470, 20)
+	ashape.size = Vector2(260, 18)
 	ac.shape = ashape
 	area.add_child(ac)
 	var normal = Vector2(0, -1).rotated(rot)
@@ -168,8 +168,8 @@ static func build(root: Node2D) -> Dictionary:
 	wall(walls, Vector2(540, 1940), Vector2(1080, 40))
 
 	refs.slings = [
-		slingshot(root, Vector2(150, 1300), 0.873),
-		slingshot(root, Vector2(860, 1300), -0.873)
+		slingshot(root, Vector2(185, 1330), 0.873),
+		slingshot(root, Vector2(835, 1330), -0.873)
 	]
 
 	var syms := []
@@ -220,8 +220,8 @@ static func build(root: Node2D) -> Dictionary:
 		bumps.append(b)
 	refs.bumpers = bumps
 
-	refs.flip_l = flipper(root, Vector2(244, 1550), 1)
-	refs.flip_r = flipper(root, Vector2(776, 1550), -1)
+	refs.flip_l = flipper(root, Vector2(250, 1650), 1)
+	refs.flip_r = flipper(root, Vector2(770, 1650), -1)
 
 	var ball = RigidBody2D.new()
 	ball.mass = 3.5
