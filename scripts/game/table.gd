@@ -68,7 +68,7 @@ func build(r: Node2D):
 	plunger.setup(ball, refs.lane.plunger_vis)
 	respawn()
 	H.refresh(hud, score, balls, sym_lit)
-	hud.overlay.text = "Р—Р°Р¶РіРё С‚СЂРё РїРµС‡Р°С‚Рё вЂ”\nР§РµСЂРґР°Рє РѕС‚РєСЂРѕРµС‚СЃСЏ"
+	hud.overlay.text = "ТЬМА ЗАБРАЛА МЯЧИ\n\nтапни — новый круг"
 	hud.overlay.visible = true
 	var tw = root.create_tween()
 	tw.tween_interval(5.0)
@@ -197,7 +197,7 @@ func tick(delta):
 				if bump_lit[0] and bump_lit[1] and bump_lit[2]:
 					score += 1000
 					over = true
-					hud.overlay.text = "РЈР РћР’Р•РќР¬ РџР РћР™Р”Р•Рќ\n\nС‚Р°РїРЅРё вЂ” РЅРѕРІС‹Р№ РєСЂСѓРі"
+					hud.overlay.text = "ТЬМА ЗАБРАЛА МЯЧИ\n\nтапни — новый круг"
 					hud.overlay.visible = true
 
 	for i in range(2):
@@ -249,7 +249,7 @@ func tick(delta):
 		H.refresh(hud, score, balls, sym_lit)
 		if balls <= 0:
 			over = true
-			hud.overlay.text = "РўР¬РњРђ Р—РђР‘Р РђР›Рђ РњРЇР§Р\n\nС‚Р°РїРЅРё вЂ” РЅРѕРІС‹Р№ РєСЂСѓРі"
+			hud.overlay.text = "ТЬМА ЗАБРАЛА МЯЧИ\n\nтапни — новый круг"
 			hud.overlay.visible = true
 		respawn()
 

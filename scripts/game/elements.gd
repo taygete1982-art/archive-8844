@@ -1,4 +1,4 @@
-extends RefCounted
+﻿extends RefCounted
 
 const U = preload("res://scripts/game/util.gd")
 
@@ -21,11 +21,11 @@ static func slingshot(root, pos, rot) -> Dictionary:
 	var edge = U.poly(Color(0.85, 0.65, 0.25, 1), [Vector2(-180, -25), Vector2(180, -25), Vector2(180, -17), Vector2(-180, -17)])
 	f.add_child(edge)
 	var area = Area2D.new()
-	area.position = Vector2(-30, -36)
+	area.position = Vector2(-50, -36)
 	f.add_child(area)
 	var ac = CollisionShape2D.new()
 	var ashape = RectangleShape2D.new()
-	ashape.size = Vector2(300, 18)
+	ashape.size = Vector2(260, 18)
 	ac.shape = ashape
 	area.add_child(ac)
 	var normal = Vector2(0, -1).rotated(rot)
@@ -58,8 +58,8 @@ static func build(root: Node2D) -> Dictionary:
 	var refs := {}
 
 	refs.slings = [
-		slingshot(root, Vector2(130, 1520), 0.785),
-		slingshot(root, Vector2(890, 1520), -0.785)
+		slingshot(root, Vector2(115, 1505), 0.785),
+		slingshot(root, Vector2(905, 1505), -0.785)
 	]
 
 	var syms := []
