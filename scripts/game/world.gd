@@ -9,7 +9,7 @@ static func build(root: Node2D) -> Dictionary:
 	Engine.physics_ticks_per_second = 360
 	var refs := {}
 	var bg = ColorRect.new()
-	bg.color = Color(0.02, 0.02, 0.025, 1)
+	bg.color = Color(0.02, 0.08, 0.07, 1)
 	bg.size = Vector2(1080, 1920)
 	root.add_child(bg)
 

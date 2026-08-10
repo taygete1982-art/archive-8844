@@ -16,6 +16,19 @@ static func arrow(k: float) -> Array:
         out.append(q * k)
     return out
 
+static func dimall(bumps: Array, lvs: Array, syms: Array):
+    for b in bumps:
+        b.get_child(1).visible = false
+        b.get_child(2).color = Color(0.13, 0.11, 0.08, 1)
+        b.get_child(3).color = Color(0.22, 0.18, 0.12, 1)
+    for lv in lvs:
+        lv.get_child(1).visible = false
+        lv.get_child(2).color = Color(0.16, 0.13, 0.08, 1)
+    for s in syms:
+        s.get_child(0).visible = false
+        s.get_child(1).color = Color(0.16, 0.13, 0.08, 1)
+        s.get_child(2).color = Color(0.08, 0.06, 0.04, 1)
+
 static func slingshot(root, pos, rot) -> Dictionary:
     var f = StaticBody2D.new()
     f.position = pos
@@ -77,16 +90,18 @@ static func build(root: Node2D) -> Dictionary:
     for p in [Vector2(150, 700), Vector2(870, 700), Vector2(510, 320)]:
         var s = Node2D.new()
         s.position = p
-        s.add_child(U.glow_sprite(U.radial_tex(Color(1, 0.8, 0.4, 0.35), Color(1, 0.8, 0.4, 0)), Vector2(0, 0), Vector2(1.2, 1.2)))
-        s.add_child(U.poly(Color(0.8, 0.62, 0.25, 1), arrow(0.5)))
-        s.add_child(U.poly(Color(0.05, 0.04, 0.03, 1), arrow(0.22)))
+        var g = U.glow_sprite(U.radial_tex(Color(1, 0.8, 0.4, 0.35), Color(1, 0.8, 0.4, 0)), Vector2(0, 0), Vector2(1.2, 1.2))
+        g.visible = false
+        s.add_child(g)
+        s.add_child(U.poly(Color(0.16, 0.13, 0.08, 1), arrow(0.5)))
+        s.add_child(U.poly(Color(0.08, 0.06, 0.04, 1), arrow(0.22)))
         root.add_child(s)
         syms.append(s)
     refs.symbols = syms
     var thread = Line2D.new()
     thread.points = PackedVector2Array([Vector2(250, 550), Vector2(770, 550)])
     thread.width = 5
-    thread.default_color = Color(1, 0.75, 0.35, 0.4)
+    thread.default_color = Color(1, 0.75, 0.35, 0.15)
     root.add_child(thread)
     refs.thread = thread
     var lvs := []
@@ -99,8 +114,10 @@ static func build(root: Node2D) -> Dictionary:
         cs.radius = 30
         c.shape = cs
         lv.add_child(c)
-        lv.add_child(U.glow_sprite(U.radial_tex(Color(1, 0.85, 0.4, 0.35), Color(1, 0.85, 0.4, 0)), Vector2(0, 0), Vector2(1.1, 1.1)))
-        lv.add_child(U.poly(Color(0.85, 0.65, 0.25, 1), U.octagon(30)))
+        var g = U.glow_sprite(U.radial_tex(Color(1, 0.85, 0.4, 0.35), Color(1, 0.85, 0.4, 0)), Vector2(0, 0), Vector2(1.1, 1.1))
+        g.visible = false
+        lv.add_child(g)
+        lv.add_child(U.poly(Color(0.16, 0.13, 0.08, 1), U.octagon(30)))
         lvs.append(lv)
     refs.lovers = lvs
     var warm = U.radial_tex(Color(1, 0.6, 0.2, 0.35), Color(1, 0.6, 0.2, 0))
@@ -114,11 +131,14 @@ static func build(root: Node2D) -> Dictionary:
         cs.radius = 25
         c.shape = cs
         b.add_child(c)
-        b.add_child(U.glow_sprite(warm, Vector2(0, 0), Vector2(0.9, 0.9)))
-        b.add_child(U.poly(Color(0.35, 0.28, 0.12, 1), cross(0.46)))
-        b.add_child(U.poly(Color(0.85, 0.65, 0.25, 1), cross(0.24)))
+        var g = U.glow_sprite(warm, Vector2(0, 0), Vector2(0.9, 0.9))
+        g.visible = false
+        b.add_child(g)
+        b.add_child(U.poly(Color(0.13, 0.11, 0.08, 1), cross(0.46)))
+        b.add_child(U.poly(Color(0.22, 0.18, 0.12, 1), cross(0.24)))
         bumps.append(b)
     refs.bumpers = bumps
     refs.flip_l = flipper(root, Vector2(250, 1650), 1)
     refs.flip_r = flipper(root, Vector2(770, 1650), -1)
+    dimall(refs.bumpers, refs.lovers, refs.symbols)
     return refs
