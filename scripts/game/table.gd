@@ -132,7 +132,7 @@ func input(event):
                     charger.release(false)
 
 func tick(delta):
-    ball.get_child(3).rotation += ball.linear_velocity.x * delta / 18.0
+    ball.get_child(2).rotation += ball.linear_velocity.x * delta / 18.0
     
     flip_l_a = move_toward(flip_l_a, -30.0 if flip_l_on else 30.0, FLIP_SPEED * delta)
     flip_l.rotation_degrees = flip_l_a
@@ -175,7 +175,7 @@ func tick(delta):
             ball.apply_central_impulse(s.normal * 900)
             score += 10
             H.refresh(hud, score, balls, sym_lit)
-            s.edge.modulate = Color(1, 1, 1, 1)
+            s.edge.modulate = Color(4, 4, 4, 1)
             var tw = root.create_tween()
             tw.tween_property(s.edge, "modulate", Color(1, 1, 1, 1), 0.2)
 
