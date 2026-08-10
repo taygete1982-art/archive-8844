@@ -43,8 +43,8 @@ var flip_r_a := -30.0
 var hot := false
 var hot_t := 0.0
 
-const MAX_SPEED := 1900.0
-const FLIP_SPEED := 1700.0
+const MAX_SPEED := 2200.0
+const FLIP_SPEED := 2100.0
 
 func build(r: Node2D):
 	root = r
@@ -127,8 +127,8 @@ func input(event):
 				else:
 					if plunger.launch():
 						skill_flash()
-					if ball.linear_velocity.y > -2100:
-						ball.linear_velocity.y = -2100
+					if ball.linear_velocity.y > -2700:
+						ball.linear_velocity.y = -2700
 			else:
 				flip_r_on = pressed
 				if not pressed and charger:
@@ -154,8 +154,12 @@ func tick(delta):
 	var contact = false
 	if flip_l_on and ball.global_position.distance_to(flip_l.global_position) < 260:
 		contact = true
+		if ball.linear_velocity.x < 200.0:
+			ball.linear_velocity.x = 200.0
 	if flip_r_on and ball.global_position.distance_to(flip_r.global_position) < 260:
 		contact = true
+		if ball.linear_velocity.x > -200.0:
+			ball.linear_velocity.x = -200.0
 	if contact:
 		hot = true
 		hot_t = 2.5
@@ -175,7 +179,7 @@ func tick(delta):
 		s.cd -= delta
 		if s.cd <= 0 and ball.global_position.y < 1500 and s.area.get_overlapping_bodies().has(ball):
 			s.cd = 0.25
-			ball.apply_central_impulse(s.normal * 750)
+			ball.apply_central_impulse(s.normal * 850)
 			score += 10
 			H.refresh(hud, score, balls, sym_lit)
 
@@ -202,7 +206,7 @@ func tick(delta):
 			if dir.length() < 0.1:
 				dir = Vector2(0, -1)
 			dir = dir.rotated(randf_range(-0.25, 0.25))
-			ball.apply_central_impulse(dir * 600)
+			ball.apply_central_impulse(dir * 700)
 			bumpers[i].get_child(1).modulate = Color(4, 4, 4, 1)
 			var twb = root.create_tween()
 			twb.tween_property(bumpers[i].get_child(1), "modulate", Color(1, 1, 1, 1), 0.2)
