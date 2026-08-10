@@ -1,4 +1,4 @@
-extends RefCounted
+п»їextends RefCounted
 
 var W = preload("res://scripts/game/world.gd")
 var H = preload("res://scripts/game/hud.gd")
@@ -65,7 +65,7 @@ func build(r: Node2D):
 	feat = F.build(r, refs)
 	respawn()
 	H.refresh(hud, score, balls, sym_lit)
-	hud.overlay.text = "Зажги три печати —\nЧердак откроется"
+	hud.overlay.text = "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ\nпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ"
 	hud.overlay.visible = true
 	var tw = root.create_tween()
 	tw.tween_interval(5.0)
@@ -207,7 +207,7 @@ if plunger and not plunger.is_launching:
 				if bump_lit[0] and bump_lit[1] and bump_lit[2]:
 					score += 1000
 					over = true
-					hud.overlay.text = "УРОВЕНЬ ПРОЙДЕН\n\nтапни — новый круг"
+					hud.overlay.text = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ\n\nпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ"
 					hud.overlay.visible = true
 
 	for i in range(2):
@@ -259,7 +259,7 @@ if plunger and not plunger.is_launching:
 		H.refresh(hud, score, balls, sym_lit)
 		if balls <= 0:
 			over = true
-			hud.overlay.text = "ТЬМА ЗАБРАЛА МЯЧИ\n\nтапни — новый круг"
+			hud.overlay.text = "пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ\n\nпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ"
 			hud.overlay.visible = true
 		respawn()
 
