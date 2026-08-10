@@ -1,4 +1,4 @@
-﻿extends RefCounted
+extends RefCounted
 
 const U = preload("res://scripts/game/util.gd")
 
@@ -59,9 +59,18 @@ static func slingshot(root, pos, rot) -> Dictionary:
 
 static func flipper(root, pos, side) -> AnimatableBody2D:
     var f = AnimatableBody2D.new()
+    f.name = "LeftFlipper" if side > 0 else "RightFlipper"
     f.position = pos
     f.sync_to_physics = true
     root.add_child(f)
+    
+    var script = load("res://scripts/game/flipper_physics.gd")
+    if script:
+        f.set_script(script)
+        f.side = side
+        f.rest_angle = 30.0 if side > 0 else -30.0
+        f.active_angle = -30.0 if side > 0 else 30.0
+    
     var c = CollisionShape2D.new()
     var s = RectangleShape2D.new()
     s.size = Vector2(250, 40)
