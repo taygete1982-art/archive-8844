@@ -64,12 +64,12 @@ static func build(root: Node2D) -> Dictionary:
 	refs.flip_r = el.flip_r
 
 	var ball = RigidBody2D.new()
-	ball.mass = 3.5
+	ball.mass = 5.0
 	ball.can_sleep = false
 	ball.continuous_cd = 1
-	ball.gravity_scale = 1.8
+	ball.gravity_scale = 2.3
 	ball.linear_damp_mode = RigidBody2D.DAMP_MODE_REPLACE
-	ball.linear_damp = 0.03
+	ball.linear_damp = 0.1
 	var bpm = PhysicsMaterial.new()
 	bpm.bounce = 0.2
 	bpm.friction = 0.05

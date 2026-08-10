@@ -1,4 +1,4 @@
-extends RefCounted
+﻿extends RefCounted
 
 var W = preload("res://scripts/game/world.gd")
 var H = preload("res://scripts/game/hud.gd")
@@ -43,8 +43,8 @@ var flip_r_a := -30.0
 var hot := false
 var hot_t := 0.0
 
-const MAX_SPEED := 2600.0
-const FLIP_SPEED := 2400.0
+const MAX_SPEED := 1900.0
+const FLIP_SPEED := 1700.0
 
 func build(r: Node2D):
 	root = r
@@ -127,8 +127,8 @@ func input(event):
 				else:
 					if plunger.launch():
 						skill_flash()
-					if ball.linear_velocity.y > -2600:
-						ball.linear_velocity.y = -2600
+					if ball.linear_velocity.y > -2100:
+						ball.linear_velocity.y = -2100
 			else:
 				flip_r_on = pressed
 				if not pressed and charger:
@@ -175,7 +175,7 @@ func tick(delta):
 		s.cd -= delta
 		if s.cd <= 0 and ball.global_position.y < 1500 and s.area.get_overlapping_bodies().has(ball):
 			s.cd = 0.25
-			ball.apply_central_impulse(s.normal * 900)
+			ball.apply_central_impulse(s.normal * 750)
 			score += 10
 			H.refresh(hud, score, balls, sym_lit)
 
@@ -202,7 +202,7 @@ func tick(delta):
 			if dir.length() < 0.1:
 				dir = Vector2(0, -1)
 			dir = dir.rotated(randf_range(-0.25, 0.25))
-			ball.apply_central_impulse(dir * 700)
+			ball.apply_central_impulse(dir * 600)
 			bumpers[i].get_child(1).modulate = Color(4, 4, 4, 1)
 			var twb = root.create_tween()
 			twb.tween_property(bumpers[i].get_child(1), "modulate", Color(1, 1, 1, 1), 0.2)
@@ -222,7 +222,7 @@ func tick(delta):
 			lover_hit[i] = true
 			var dir = (ball.global_position - lovers[i].global_position).normalized()
 			dir = dir.rotated(randf_range(-0.4, 0.4))
-			ball.apply_central_impulse(dir * 550)
+			ball.apply_central_impulse(dir * 500)
 			lovers[i].get_child(2).color = Color(1, 0.85, 0.4)
 			thread.default_color = Color(1, 0.8, 0.4, 0.9)
 			if lover_hit[0] and lover_hit[1]:
