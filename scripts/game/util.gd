@@ -16,6 +16,7 @@ static func ngon(r: float, n: int):
 
 static func poly(color: Color, pts) -> Polygon2D:
 	var p = Polygon2D.new()
+	p.antialiased = true
 	p.color = color
 	var arr = PackedVector2Array()
 	for pt in pts:
@@ -49,7 +50,7 @@ static func radial_tex(c1: Color, c2: Color) -> GradientTexture2D:
 static func glow_sprite(tex, pos, scale) -> Sprite2D:
 	var s = Sprite2D.new()
 	s.texture = tex
-	s.visible = false
+	s.material = add_mat()
 	s.position = pos
 	s.scale = scale
 	return s

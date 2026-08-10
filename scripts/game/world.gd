@@ -9,19 +9,19 @@ static func build(root: Node2D) -> Dictionary:
 	Engine.physics_ticks_per_second = 360
 	var refs := {}
 	var bg = ColorRect.new()
-	bg.color = Color(0.95, 0.91, 0.84, 1)
+	bg.color = Color(0.02, 0.02, 0.025, 1)
 	bg.size = Vector2(1080, 1920)
 	root.add_child(bg)
 
-	U.gold_line(root, Color(0.45, 0.32, 0.18, 0.9), [Vector2(0, 0), Vector2(4, 0), Vector2(4, 1860), Vector2(0, 1860)])
-	U.gold_line(root, Color(0.45, 0.32, 0.18, 0.9), [Vector2(1016, 0), Vector2(1020, 0), Vector2(1020, 1860), Vector2(1016, 1860)])
-	U.gold_line(root, Color(0.45, 0.32, 0.18, 0.9), [Vector2(0, 0), Vector2(1020, 0), Vector2(1020, 4), Vector2(0, 4)])
-	U.gold_line(root, Color(0.35, 0.55, 0.65, 0.9), [Vector2(0, 1856), Vector2(1020, 1856), Vector2(1020, 1860), Vector2(0, 1860)])
+	U.gold_line(root, Color(0.85, 0.65, 0.25, 0.9), [Vector2(0, 0), Vector2(4, 0), Vector2(4, 1860), Vector2(0, 1860)])
+	U.gold_line(root, Color(0.85, 0.65, 0.25, 0.9), [Vector2(1016, 0), Vector2(1020, 0), Vector2(1020, 1860), Vector2(1016, 1860)])
+	U.gold_line(root, Color(0.85, 0.65, 0.25, 0.9), [Vector2(0, 0), Vector2(1020, 0), Vector2(1020, 4), Vector2(0, 4)])
+	U.gold_line(root, Color(0.6, 0.85, 1, 0.9), [Vector2(0, 1856), Vector2(1020, 1856), Vector2(1020, 1860), Vector2(0, 1860)])
 
 	var hole = ColorRect.new()
 	hole.size = Vector2(240, 50)
 	hole.position = Vector2(390, 0)
-	hole.color = Color(0.45, 0.32, 0.18, 1)
+	hole.color = Color(0.01, 0.01, 0.01, 1)
 	root.add_child(hole)
 
 	var gate = StaticBody2D.new()
@@ -36,13 +36,13 @@ static func build(root: Node2D) -> Dictionary:
 	var gvis = ColorRect.new()
 	gvis.size = Vector2(240, 40)
 	gvis.position = Vector2(-120, -20)
-	gvis.color = Color(0.55, 0.4, 0.25, 1)
+	gvis.color = Color(0.06, 0.05, 0.04, 1)
 	gate.add_child(gvis)
 	refs.gate_vis = gvis
 	var gseam = ColorRect.new()
 	gseam.size = Vector2(240, 6)
 	gseam.position = Vector2(-120, 14)
-	gseam.color = Color(0.85, 0.45, 0.15, 0.9)
+	gseam.color = Color(1, 0.8, 0.35, 0.9)
 	gate.add_child(gseam)
 	refs.gate_seam = gseam
 
@@ -80,8 +80,8 @@ static func build(root: Node2D) -> Dictionary:
 	bs.radius = 18
 	bc.shape = bs
 	ball.add_child(bc)
-	ball.add_child(U.glow_sprite(U.radial_tex(Color(0.85, 0.45, 0.15, 0.25), Color(0.85, 0.45, 0.15, 0)), Vector2(0, 0), Vector2(1.2, 1.2)))
-	ball.add_child(U.poly(Color(0.15, 0.13, 0.12, 1), U.ngon(18, 12)))
+	ball.add_child(U.glow_sprite(U.radial_tex(Color(1, 0.85, 0.3, 0.5), Color(1, 0.85, 0.3, 0)), Vector2(0, 0), Vector2(1.2, 1.2)))
+	ball.add_child(U.poly(Color(1, 0.97, 0.9, 1), U.ngon(18, 12)))
 	refs.ball = ball
 
 	refs.lane = Lane.build(root)
