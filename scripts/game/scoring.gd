@@ -1,4 +1,4 @@
-extends RefCounted
+﻿extends RefCounted
 
 var H = preload("res://scripts/game/hud.gd")
 var A = preload("res://scripts/game/atmosphere.gd")
@@ -34,7 +34,7 @@ func tick(delta):
 			twb.tween_property(t.bumpers[i].get_child(1), "modulate", Color(1, 1, 1, 1), 0.2)
 			if t.hot and not bump_lit[i]:
 				bump_lit[i] = true
-				t.bumpers[i].get_child(2).color = Color(1, 0.65, 0.25)
+				t.bumpers[i].get_child(2).color = Color(0.9, 0.35, 0.1)
 				add(100)
 				if bump_lit[0] and bump_lit[1] and bump_lit[2]:
 					add(1000)
@@ -46,14 +46,14 @@ func tick(delta):
 			var dir = (t.ball.global_position - t.lovers[i].global_position).normalized()
 			dir = dir.rotated(randf_range(-0.4, 0.4))
 			t.ball.apply_central_impulse(dir * 500)
-			t.lovers[i].get_child(2).color = Color(1, 0.85, 0.4)
-			t.thread.default_color = Color(1, 0.8, 0.4, 0.9)
+			t.lovers[i].get_child(2).color = Color(0.9, 0.5, 0.15)
+			t.thread.default_color = Color(0.9, 0.5, 0.15, 0.9)
 			if lover_hit[0] and lover_hit[1]:
 				add(500)
 				lover_hit = [false, false]
 				t.lovers[0].get_child(2).color = Color(0.85, 0.65, 0.25)
 				t.lovers[1].get_child(2).color = Color(0.85, 0.65, 0.25)
-				t.thread.default_color = Color(1, 0.75, 0.35, 0.4)
+				t.thread.default_color = Color(0.7, 0.45, 0.2, 0.5)
 			else:
 				var twl = t.root.create_tween()
 				twl.tween_interval(2.0)
@@ -62,12 +62,12 @@ func tick(delta):
 						lover_hit = [false, false]
 						t.lovers[0].get_child(2).color = Color(0.85, 0.65, 0.25)
 						t.lovers[1].get_child(2).color = Color(0.85, 0.65, 0.25)
-						t.thread.default_color = Color(1, 0.75, 0.35, 0.4))
+						t.thread.default_color = Color(0.7, 0.45, 0.2, 0.5))
 
 	for i in range(3):
 		if t.hot and not sym_lit[i] and t.symbols[i].get_child(1).global_position.distance_to(t.ball.global_position) < 50:
 			sym_lit[i] = true
-			t.symbols[i].get_child(1).color = Color(1, 0.9, 0.5)
+			t.symbols[i].get_child(1).color = Color(0.95, 0.6, 0.2)
 			add(50)
 			A.progress(t.fx, sym_lit)
 			if sym_lit[0] and sym_lit[1] and sym_lit[2]:
@@ -90,6 +90,6 @@ func reset():
 	lover_hit = [false, false]
 	sym_lit = [false, false, false]
 	for i in range(3):
-		t.bumpers[i].get_child(2).color = Color(0.35, 0.28, 0.12)
-		t.symbols[i].get_child(1).color = Color(0.8, 0.62, 0.25)
-	t.thread.default_color = Color(1, 0.75, 0.35, 0.4)
+		t.bumpers[i].get_child(2).color = Color(0.75, 0.4, 0.25)
+		t.symbols[i].get_child(1).color = Color(0.7, 0.45, 0.2)
+	t.thread.default_color = Color(0.7, 0.45, 0.2, 0.5)

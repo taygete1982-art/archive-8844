@@ -1,4 +1,4 @@
-extends RefCounted
+﻿extends RefCounted
 
 static func octagon(r: float):
 	var pts := []
@@ -31,7 +31,7 @@ static func mirror(pts):
 
 static func add_mat() -> CanvasItemMaterial:
 	var m = CanvasItemMaterial.new()
-	m.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	m.blend_mode = CanvasItemMaterial.BLEND_MODE_MIX
 	return m
 
 static func radial_tex(c1: Color, c2: Color) -> GradientTexture2D:
@@ -49,7 +49,7 @@ static func radial_tex(c1: Color, c2: Color) -> GradientTexture2D:
 static func glow_sprite(tex, pos, scale) -> Sprite2D:
 	var s = Sprite2D.new()
 	s.texture = tex
-	s.material = add_mat()
+	s.visible = false
 	s.position = pos
 	s.scale = scale
 	return s

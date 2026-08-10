@@ -170,7 +170,7 @@ func tick(delta):
 
     for s in slings:
         s.cd -= delta
-        if s.cd <= 0 and s.area.get_overlapping_bodies().has(ball):
+        if s.cd <= 0 and ball.global_position.y < 1500 and s.area.get_overlapping_bodies().has(ball):
             s.cd = 0.25
             ball.apply_central_impulse(s.normal * 900)
             score += 10
@@ -181,7 +181,7 @@ func tick(delta):
 
     var in_lane = plunger and plunger.ball_in_lane()
 
-    if not in_lane and ball.linear_velocity.length() < 20 and ball.global_position.y < 1400:
+    if false:
         stuck_t += delta
         if stuck_t > 6.0:
             respawn()
@@ -202,7 +202,7 @@ func tick(delta):
             twb.tween_property(bumpers[i].get_child(1), "modulate", Color(1, 1, 1, 1), 0.2)
             if hot and not bump_lit[i]:
                 bump_lit[i] = true
-                bumpers[i].get_child(2).color = Color(1, 0.65, 0.25)
+                bumpers[i].get_child(2).color = Color(0.9, 0.35, 0.1)
                 score += 100
                 H.refresh(hud, score, balls, sym_lit)
                 if bump_lit[0] and bump_lit[1] and bump_lit[2]:
@@ -217,15 +217,15 @@ func tick(delta):
             var dir = (ball.global_position - lovers[i].global_position).normalized()
             dir = dir.rotated(randf_range(-0.4, 0.4))
             ball.apply_central_impulse(dir * 550)
-            lovers[i].get_child(2).color = Color(1, 0.85, 0.4)
-            thread.default_color = Color(1, 0.8, 0.4, 0.9)
+            lovers[i].get_child(2).color = Color(0.9, 0.5, 0.15)
+            thread.default_color = Color(0.9, 0.5, 0.15, 0.9)
             if lover_hit[0] and lover_hit[1]:
                 score += 500
                 H.refresh(hud, score, balls, sym_lit)
                 lover_hit = [false, false]
                 lovers[0].get_child(2).color = Color(0.85, 0.65, 0.25)
                 lovers[1].get_child(2).color = Color(0.85, 0.65, 0.25)
-                thread.default_color = Color(1, 0.75, 0.35, 0.4)
+                thread.default_color = Color(0.7, 0.45, 0.2, 0.5)
             else:
                 var twl = root.create_tween()
                 twl.tween_interval(2.0)
@@ -234,12 +234,12 @@ func tick(delta):
                         lover_hit = [false, false]
                         lovers[0].get_child(2).color = Color(0.85, 0.65, 0.25)
                         lovers[1].get_child(2).color = Color(0.85, 0.65, 0.25)
-                        thread.default_color = Color(1, 0.75, 0.35, 0.4))
+                        thread.default_color = Color(0.7, 0.45, 0.2, 0.5))
 
     for i in range(3):
         if hot and not sym_lit[i] and symbols[i].get_child(1).global_position.distance_to(ball.global_position) < 50:
             sym_lit[i] = true
-            symbols[i].get_child(1).color = Color(1, 0.9, 0.5)
+            symbols[i].get_child(1).color = Color(0.95, 0.6, 0.2)
             score += 50
             H.refresh(hud, score, balls, sym_lit)
             A.progress(fx, sym_lit)
@@ -274,12 +274,12 @@ func reset():
     gate_seam.visible = true
     bump_lit = [false, false, false]
     for i in range(3):
-        bumpers[i].get_child(2).color = Color(0.35, 0.28, 0.12)
+        bumpers[i].get_child(2).color = Color(0.75, 0.4, 0.25)
     lover_hit = [false, false]
     sym_lit = [false, false, false]
     for i in range(3):
-        symbols[i].get_child(1).color = Color(0.8, 0.62, 0.25)
-    thread.default_color = Color(1, 0.75, 0.35, 0.4)
+        symbols[i].get_child(1).color = Color(0.7, 0.45, 0.2)
+    thread.default_color = Color(0.7, 0.45, 0.2, 0.5)
     hud.overlay.visible = false
     hot = false
     hot_t = 0.0
