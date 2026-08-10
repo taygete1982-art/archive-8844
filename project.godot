@@ -16,10 +16,7 @@ config/features=PackedStringArray("4.7", "Mobile")
 run/flush_stdout_on_print=true
 config/icon="res://icon.svg"
 
-[autoload]
 
-ScoreManager="*res://scripts/score_manager.gd"
-FX="*uid://c8af03dtr6nxw"
 
 [display]
 
