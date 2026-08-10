@@ -40,8 +40,8 @@ var flip_r_a := -30.0
 var hot := false
 var hot_t := 0.0
 
-const MAX_SPEED := 1300.0
-const FLIP_SPEED := 1400.0
+const MAX_SPEED := 2600.0
+const FLIP_SPEED := 2400.0
 
 func build(r: Node2D):
 	root = r
@@ -130,6 +130,7 @@ func input(event):
 					charger.release(false)
 
 func tick(delta):
+	ball.get_child(2).rotation += ball.linear_velocity.x * delta / 18.0
 	flip_l_a = move_toward(flip_l_a, -30.0 if flip_l_on else 30.0, FLIP_SPEED * delta)
 	flip_l.rotation_degrees = flip_l_a
 	flip_r_a = move_toward(flip_r_a, 30.0 if flip_r_on else -30.0, FLIP_SPEED * delta)

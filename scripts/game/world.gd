@@ -1,4 +1,4 @@
-extends RefCounted
+﻿extends RefCounted
 
 const U = preload("res://scripts/game/util.gd")
 const E = preload("res://scripts/game/elements.gd")
@@ -6,7 +6,7 @@ const Lane = preload("res://scripts/game/lane.gd")
 const Atmosphere = preload("res://scripts/game/atmosphere.gd")
 
 static func build(root: Node2D) -> Dictionary:
-	Engine.physics_ticks_per_second = 180
+	Engine.physics_ticks_per_second = 360
 	var refs := {}
 	var bg = ColorRect.new()
 	bg.color = Color(0.02, 0.02, 0.025, 1)
@@ -67,11 +67,11 @@ static func build(root: Node2D) -> Dictionary:
 	ball.mass = 3.5
 	ball.can_sleep = false
 	ball.continuous_cd = 1
-	ball.gravity_scale = 1.3
+	ball.gravity_scale = 1.8
 	ball.linear_damp_mode = RigidBody2D.DAMP_MODE_REPLACE
-	ball.linear_damp = 0.05
+	ball.linear_damp = 0.03
 	var bpm = PhysicsMaterial.new()
-	bpm.bounce = 0.15
+	bpm.bounce = 0.2
 	bpm.friction = 0.05
 	ball.physics_material_override = bpm
 	root.add_child(ball)
