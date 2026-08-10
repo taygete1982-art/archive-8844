@@ -47,6 +47,10 @@ static func build(root: Node2D) -> Dictionary:
 	refs.gate_seam = gseam
 
 	var walls = StaticBody2D.new()
+    var wpm = PhysicsMaterial.new()
+    wpm.bounce = 0.5
+    wpm.friction = 0.2
+    walls.physics_material_override = wpm
 	root.add_child(walls)
 	U.wall(walls, Vector2(-20, 960), Vector2(40, 1920))
 	U.wall(walls, Vector2(1100, 960), Vector2(40, 1920))
@@ -71,8 +75,8 @@ static func build(root: Node2D) -> Dictionary:
 	ball.linear_damp_mode = RigidBody2D.DAMP_MODE_REPLACE
 	ball.linear_damp = 0.06
 	var bpm = PhysicsMaterial.new()
-	bpm.bounce = 0.2
-	bpm.friction = 0.05
+	bpm.bounce = 0.45
+	bpm.friction = 0.15
 	ball.physics_material_override = bpm
 	root.add_child(ball)
 	var bc = CollisionShape2D.new()
