@@ -1,4 +1,4 @@
-ï»¿extends RefCounted
+extends RefCounted
 
 var W = preload("res://scripts/game/world.gd")
 var H = preload("res://scripts/game/hud.gd")
@@ -38,14 +38,7 @@ var stuck_t := 0.0
 var over := false
 var flip_l_on := false
 var flip_r_on := false
-var flip_l_a := 30.0
-var flip_r_a := -30.0
-var hot := false
-var hot_t := 0.0
-
 const MAX_SPEED := 2200.0
-const FLIP_SPEED := 2100.0
-
 func build(r: Node2D):
 	root = r
 	var refs = W.build(r)
@@ -72,7 +65,7 @@ func build(r: Node2D):
 	feat = F.build(r, refs)
 	respawn()
 	H.refresh(hud, score, balls, sym_lit)
-	hud.overlay.text = "Ğ—Ğ°Ğ¶Ğ³Ğ¸ Ñ‚Ñ€Ğ¸ Ğ¿ĞµÑ‡Ğ°Ñ‚Ğ¸ â€”\nĞ§ĞµÑ€Ğ´Ğ°Ğº Ğ¾Ñ‚ĞºÑ€Ğ¾ĞµÑ‚ÑÑ"
+	hud.overlay.text = "Çàæãè òğè ïå÷àòè —\n×åğäàê îòêğîåòñÿ"
 	hud.overlay.visible = true
 	var tw = root.create_tween()
 	tw.tween_interval(5.0)
@@ -137,12 +130,11 @@ func input(event):
 func tick(delta):
 	ball.get_child(2).rotation += ball.linear_velocity.x * delta / 18.0
 
-	flip_l_a = move_toward(flip_l_a, -30.0 if flip_l_on else 30.0, FLIP_SPEED * delta)
-	flip_l.rotation_degrees = flip_l_a
-	flip_r_a = move_toward(flip_r_a, 30.0 if flip_r_on else -30.0, FLIP_SPEED * delta)
-	flip_r.rotation_degrees = flip_r_a
-
-	if charger:
+	if is_instance_valid(flip_l) and flip_l.has_method("set_active"):
+	flip_l.set_active(flip_l_on)
+if is_instance_valid(flip_r) and flip_r.has_method("set_active"):
+	flip_r.set_active(flip_r_on)
+if charger:
 		charger.tick(delta, flip_l_on, flip_r_on)
 	if plunger:
 		plunger.tick(delta)
@@ -151,24 +143,21 @@ func tick(delta):
 	if ball.global_position.y < 340 and ball.global_position.x > 960 and ball.linear_velocity.y < 0:
 		ball.linear_velocity.x = move_toward(ball.linear_velocity.x, -700, 4000 * delta)
 
-	var contact = false
-	if flip_l_on and ball.global_position.distance_to(flip_l.global_position) < 260:
-		contact = true
-		if ball.linear_velocity.x < 200.0:
-			ball.linear_velocity.x = 200.0
-	if flip_r_on and ball.global_position.distance_to(flip_r.global_position) < 260:
-		contact = true
-		if ball.linear_velocity.x > -200.0:
-			ball.linear_velocity.x = -200.0
-	if contact:
-		hot = true
-		hot_t = 2.5
-	else:
-		hot_t -= delta
-		if hot_t <= 0.0:
-			hot = false
-
-	if plunger and not plunger.is_launching:
+	var hot = false
+var hot_t := 0.0
+var near_flipper = false
+if ball.global_position.distance_to(flip_l.global_position) < 260:
+	near_flipper = true
+if ball.global_position.distance_to(flip_r.global_position) < 260:
+	near_flipper = true
+if near_flipper:
+	hot = true
+	hot_t = 2.5
+else:
+	hot_t -= delta
+	if hot_t <= 0.0:
+		hot = false
+if plunger and not plunger.is_launching:
 		if ball.linear_velocity.length() > MAX_SPEED:
 			ball.linear_velocity = ball.linear_velocity.normalized() * MAX_SPEED
 
@@ -218,7 +207,7 @@ func tick(delta):
 				if bump_lit[0] and bump_lit[1] and bump_lit[2]:
 					score += 1000
 					over = true
-					hud.overlay.text = "Ğ£Ğ ĞĞ’Ğ•ĞĞ¬ ĞŸĞ ĞĞ™Ğ”Ğ•Ğ\n\nÑ‚Ğ°Ğ¿Ğ½Ğ¸ â€” Ğ½Ğ¾Ğ²Ñ‹Ğ¹ ĞºÑ€ÑƒĞ³"
+					hud.overlay.text = "ÓĞÎÂÅÍÜ ÏĞÎÉÄÅÍ\n\nòàïíè — íîâûé êğóã"
 					hud.overlay.visible = true
 
 	for i in range(2):
@@ -270,7 +259,7 @@ func tick(delta):
 		H.refresh(hud, score, balls, sym_lit)
 		if balls <= 0:
 			over = true
-			hud.overlay.text = "Ğ¢Ğ¬ĞœĞ Ğ—ĞĞ‘Ğ ĞĞ›Ğ ĞœĞ¯Ğ§Ğ˜\n\nÑ‚Ğ°Ğ¿Ğ½Ğ¸ â€” Ğ½Ğ¾Ğ²Ñ‹Ğ¹ ĞºÑ€ÑƒĞ³"
+			hud.overlay.text = "ÒÜÌÀ ÇÀÁĞÀËÀ Ìß×È\n\nòàïíè — íîâûé êğóã"
 			hud.overlay.visible = true
 		respawn()
 
